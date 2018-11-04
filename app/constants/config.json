@@ -1,0 +1,24 @@
+{
+  "jobs": [
+    {
+      "title": "ez-pagination",
+      "cmd": "lerna",
+      "args": [
+        "run",
+        "start",
+        "--scope=@easyops/ez-pagination",
+        "--stream"
+      ],
+      "cwd": "/Users/wangshenwei/anyclouds/Console-W"
+    },
+    {
+      "title": "agent-management",
+      "cmd": "yarn",
+      "args": [
+        "start",
+        "--scope=@console-plugin/agent-management"
+      ],
+      "cwd": "/Users/wangshenwei/anyclouds/console-plugins"
+    }
+  ]
+}
