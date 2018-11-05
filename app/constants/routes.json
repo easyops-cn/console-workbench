@@ -1,3 +1,5 @@
 {
-  "HOME": "/"
+  "HOME": "/",
+  "JOB_CREATE": "/create",
+  "JOB_EDIT": "/edit/:id"
 }

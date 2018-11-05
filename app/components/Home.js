@@ -1,55 +1,43 @@
 // @flow
 import React, { Component } from 'react';
-import { uniqueId } from 'lodash';
-import styles from './Home.css';
-import config from '../constants/config.json';
+import { Link } from 'react-router-dom';
 import TaskContainer from '../containers/TaskContainer';
+import routes from '../constants/routes';
+import type { Job } from '../constants/types';
+
+import styles from './Home.css';
 
 type Props = {
-  initialJobs: (any[]) => void,
-  addJob: any => void,
-  jobs: any[]
+  jobs: Job[]
 };
 
-export default class Home extends Component {
+export default class Home extends Component<Props> {
   props: Props;
-
-  constructor(props) {
-    super(props);
-
-    const jobs = config.jobs.map(job => ({
-      ...job,
-      id: uniqueId(),
-      starting: false,
-      running: false,
-      stopping: false,
-      output: ''
-    }));
-    props.initialJobs(jobs);
-  }
-
-  addJob = () => {
-    const id = uniqueId();
-    this.props.addJob({
-      id,
-      title: `title: ${id}`,
-      output: ''
-    });
-  };
 
   render() {
     const { jobs } = this.props;
     const rows = Math.ceil(jobs.length / 2);
     const gridTemplateRows = `repeat(${rows}, 1fr)`;
+    const gridTemplateColumns = jobs.length > 1 ? '1fr 1fr' : '1fr';
     return (
-      <div
-        className={styles.container}
-        style={{ gridTemplateRows }}
-        data-tid="container"
-      >
-        {jobs.map(job => (
-          <TaskContainer jobId={job.id} key={job.id} />
-        ))}
+      <div className={styles.container}>
+        <div
+          className={styles.tasks}
+          style={{ gridTemplateRows, gridTemplateColumns }}
+        >
+          {jobs.map(job => (
+            <TaskContainer jobId={job.id} key={job.id} />
+          ))}
+        </div>
+        <div className={styles.toolbar}>
+          <Link
+            to={routes.JOB_CREATE}
+            className={styles['btn-add-job']}
+            title="Add Job"
+          >
+            <i className="fa fa-plus fa-2x" />
+          </Link>
+        </div>
       </div>
     );
   }

@@ -20,9 +20,24 @@ body {
   padding: 0;
 }
 
+a {
+  color: #d4d4d4;
+}
+
+a:hover {
+  color: cyan;
+}
+
 pre,
 code {
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+input,
+select,
+button,
+textarea {
+  font-size: 12px;
 }
 
 #root {

@@ -1,0 +1,28 @@
+.form {
+  width: 90%;
+  max-width: 500px;
+  margin: 30px auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 15px;
+  gap: 15px;
+}
+
+.form-group {
+  display: grid;
+  grid-template-columns: 150px 340px;
+  grid-column-gap: 10px;
+  column-gap: 10px;
+  margin: 0 auto;
+}
+
+.form-label {
+  grid-column: 1;
+  text-align: right;
+  padding: 3px 0 2px;
+}
+
+.form-control {
+  grid-column: 2;
+  min-width: 120px;
+}

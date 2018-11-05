@@ -2,19 +2,21 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import AnsiUp from 'ansi_up';
+import { withRouter } from 'react-router-dom';
+import type { Job } from '../constants/types';
+
 import styles from './Task.css';
 
 type Props = {
-  startJob: any => void,
-  stopJob: any => void,
-  clearJobOutput: any => void,
-  removeJob: any => void,
-  activateJob: any => void,
-  job: any,
+  startJob: Job => void,
+  stopJob: Job => void,
+  clearJobOutput: Job => void,
+  activateJob: Job => void,
+  job: Job,
   active: boolean
 };
 
-export default class Task extends Component {
+export default class Task extends Component<Props> {
   props: Props;
 
   ansiUp = new AnsiUp();
@@ -35,14 +37,6 @@ export default class Task extends Component {
     const { job, clearJobOutput } = this.props;
     this.stopPropagationIfActive(e);
     clearJobOutput(job);
-  };
-
-  confirmToRemoveJob = e => {
-    const { job, removeJob } = this.props;
-    this.stopPropagationIfActive(e);
-    if (window.confirm(`确认要删除 \`${job.title}\` 吗？`)) {
-      removeJob(job);
-    }
   };
 
   stopPropagationIfActive(e) {
@@ -113,6 +107,11 @@ export default class Task extends Component {
     const taskClass = classNames(styles.task, {
       [styles.active]: active
     });
+    const BtnSettings = withRouter(({ history }) => (
+      <button type="button" onClick={() => history.push(`/edit/${job.id}`)}>
+        Settings
+      </button>
+    ));
     return (
       <a
         className={taskClass}
@@ -121,7 +120,7 @@ export default class Task extends Component {
         onClick={() => activateJob(job)}
       >
         <div className={styles.heading}>
-          <span className={styles.title}>{job.title}</span>
+          <span className={styles.name}>{job.name}</span>
           {this.renderLabels()}
           <div className={styles.toolbar}>
             <button
@@ -141,16 +140,11 @@ export default class Task extends Component {
             <button type="button" onClick={this.clearJobOutput}>
               Clear Output
             </button>
-            <button
-              type="button"
-              style={{ color: '#f34235' }}
-              onClick={this.confirmToRemoveJob}
-            >
-              Remove
-            </button>
+            <BtnSettings />
           </div>
         </div>
         <pre className={styles.output}>
+          {/* eslint-disable-next-line react/no-danger */}
           <code dangerouslySetInnerHTML={{ __html: outputHtml }} />
         </pre>
       </a>

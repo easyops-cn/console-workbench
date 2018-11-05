@@ -1,27 +1,20 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Task from '../components/Task';
-import {
-  startJob,
-  stopJob,
-  clearJobOutput,
-  activateJob
-} from '../actions/jobs';
+import JobCreate from '../components/JobCreate';
+import { updateJob, removeJob } from '../actions/jobs';
 
 function mapStateToProps(state, ownProps) {
   return {
-    job: state.jobs.entities[ownProps.jobId],
-    active: state.jobs.active === ownProps.jobId
+    job: state.jobs.entities[ownProps.match.params.id],
+    isEdit: true
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      startJob,
-      stopJob,
-      clearJobOutput,
-      activateJob
+      updateJob,
+      removeJob
     },
     dispatch
   );
@@ -30,4 +23,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Task);
+)(JobCreate);

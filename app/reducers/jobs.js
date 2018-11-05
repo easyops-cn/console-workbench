@@ -5,7 +5,6 @@ import type { Action } from './types';
 import {
   ADD_JOB,
   REMOVE_JOB,
-  INITIAL_JOBS,
   START_JOB,
   STARTED_JOB,
   JOB_OUTPUT,
@@ -14,13 +13,12 @@ import {
   JOB_ERROR,
   JOB_EXIT,
   CLEAR_JOB_OUTPUT,
-  ACTIVATE_JOB
+  ACTIVATE_JOB,
+  UPDATE_JOB
 } from '../actions/jobs';
 
 const ids = (state = [], action: Action) => {
   switch (action.type) {
-    case INITIAL_JOBS:
-      return action.jobs.map(job => job.id);
     case ADD_JOB:
       return [...state, action.job.id];
     case REMOVE_JOB:
@@ -32,15 +30,26 @@ const ids = (state = [], action: Action) => {
 
 const entities = (state = {}, action: Action) => {
   switch (action.type) {
-    case INITIAL_JOBS:
-      return action.jobs.reduce((acc, job) => {
-        acc[job.id] = job;
-        return acc;
-      }, {});
     case ADD_JOB:
       return {
         ...state,
-        [action.job.id]: action.job
+        [action.job.id]: {
+          ...action.job,
+          starting: false,
+          running: false,
+          stopping: false,
+          output: ''
+        }
+      };
+    case UPDATE_JOB:
+      return {
+        ...state,
+        [action.job.id]: {
+          ...state[action.job.id],
+          name: action.job.name,
+          cmd: action.job.cmd,
+          cwd: action.job.cwd
+        }
       };
     case REMOVE_JOB:
       return {
@@ -53,7 +62,7 @@ const entities = (state = {}, action: Action) => {
         [action.job.id]: {
           ...state[action.job.id],
           starting: true,
-          output: `$ ${action.job.cmd}\n`,
+          output: `$ cd ${action.job.cwd}\n$ ${action.job.cmd}\n`,
           error: undefined
         }
       };

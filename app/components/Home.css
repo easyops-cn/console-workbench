@@ -1,12 +1,31 @@
 .container {
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1px;
-  gap: 1;
+  position: relative;
   background-color: #d4d4d4;
 }
 
-.item {
-  overflow: hidden;
+.tasks {
+  height: 100%;
+  display: grid;
+  grid-gap: 1px;
+  gap: 1;
+}
+
+.toolbar {
+  display: none;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.container:hover .toolbar {
+  display: block;
+}
+
+.btn-add-job {
+  color: #5cb85c;
+}
+
+.btn-add-job:hover {
+  color: #4cae4c;
 }

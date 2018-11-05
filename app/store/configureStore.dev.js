@@ -5,13 +5,13 @@ import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
 import * as jobsActions from '../actions/jobs';
-import type { counterStateType } from '../reducers/types';
+import type { jobsStateType } from '../reducers/types';
 
 const history = createHashHistory();
 
 const rootReducer = createRootReducer(history);
 
-const configureStore = (initialState?: counterStateType) => {
+const configureStore = (initialState?: jobsStateType) => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];

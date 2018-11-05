@@ -1,8 +1,10 @@
 import { spawn } from 'child_process';
+import { max } from 'lodash';
 import { addTask, findTaskByJobId, removeTaskByJobId } from '../utils/tasks';
+import storage from '../storage';
 
-export const INITIAL_JOBS = 'INITIAL_JOBS';
 export const ADD_JOB = 'ADD_JOB';
+export const UPDATE_JOB = 'UPDATE_JOB';
 export const REMOVE_JOB = 'REMOVE_JOB';
 export const START_JOB = 'START_JOB';
 export const STARTED_JOB = 'STARTED_JOB';
@@ -14,15 +16,34 @@ export const JOB_EXIT = 'JOB_EXIT';
 export const CLEAR_JOB_OUTPUT = 'CLEAR_JOB_OUTPUT';
 export const ACTIVATE_JOB = 'ACTIVATE_JOB';
 
-export const initialJobs = jobs => ({
-  type: INITIAL_JOBS,
-  jobs
-});
+export const addJob = ({ name, cmd, cwd }) => dispatch => {
+  const jobs = storage.get('jobs', []);
+  const nextId = jobs.length === 0 ? 1 : max(jobs.map(item => item.id)) + 1;
+  const newJob = {
+    id: nextId,
+    name,
+    cmd,
+    cwd
+  };
+  storage.set('jobs', [...jobs, newJob]);
+  dispatch({
+    type: ADD_JOB,
+    job: newJob
+  });
+};
 
-export const addJob = job => ({
-  type: ADD_JOB,
-  job
-});
+export const updateJob = ({ id, name, cmd, cwd }) => dispatch => {
+  const job = { id, name, cmd, cwd };
+  const jobs = storage.get('jobs');
+  const originalJob = jobs.find(item => item.id === job.id);
+  Object.assign(originalJob, job);
+  storage.set('jobs', jobs);
+
+  dispatch({
+    type: UPDATE_JOB,
+    job
+  });
+};
 
 export const removeJob = job => ({
   type: REMOVE_JOB,
@@ -66,6 +87,7 @@ export const startJob = job => dispatch => {
   });
 
   const task = spawn(job.cmd, ['--color'], {
+    detached: true,
     cwd: job.cwd,
     env: process.env,
     shell: true
@@ -108,7 +130,7 @@ export const stopJob = job => dispatch => {
     return;
   }
 
-  task.kill();
+  process.kill(-task.pid);
 
   return dispatch({
     type: STOP_JOB,
