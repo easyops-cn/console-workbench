@@ -1,62 +1,55 @@
 // @flow
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
-// import routes from '../constants/routes';
 import { uniqueId } from 'lodash';
 import styles from './Home.css';
-
-type Job = {
-  id: string,
-  title: string
-}
-
-type StateJob = {
-  ids: string[],
-  entities: {
-    [key: string]: Job
-  }
-}
+import config from '../constants/config.json';
+import TaskContainer from '../containers/TaskContainer';
 
 type Props = {
-  jobs: StateJob[]
-}
+  initialJobs: (any[]) => void,
+  addJob: any => void,
+  jobs: any[]
+};
 
-/*
-<div className={styles.container} data-tid="container">
-        <h2>Home</h2>
-        <Link to={routes.COUNTER}>to Counter</Link>
-      </div>
-*/
-
-export default class Home extends Component<Props> {
+export default class Home extends Component {
   props: Props;
+
+  constructor(props) {
+    super(props);
+
+    const jobs = config.jobs.map(job => ({
+      ...job,
+      id: uniqueId(),
+      starting: false,
+      running: false,
+      stopping: false,
+      output: ''
+    }));
+    props.initialJobs(jobs);
+  }
 
   addJob = () => {
     const id = uniqueId();
     this.props.addJob({
       id,
-      title: `title: ${id}`
+      title: `title: ${id}`,
+      output: ''
     });
-  }
-
-  renderJob(job: Job) {
-    return (
-      <div className={styles.item} key={job.title}>
-        <h3>{job.title}</h3>
-        <pre><code>{job.log}</code></pre>
-      </div>
-    );
-  }
+  };
 
   render() {
+    const { jobs } = this.props;
+    const rows = Math.ceil(jobs.length / 2);
+    const gridTemplateRows = `repeat(${rows}, 1fr)`;
     return (
-      <div className={styles.container} data-tid="container">
-        {
-          this.props.jobs.ids.map(jobId => this.renderJob(this.props.jobs.entities[jobId]))
-        }
-        <div className="item">
-          <button type="button" onClick={this.addJob}>+</button>
-        </div>
+      <div
+        className={styles.container}
+        style={{ gridTemplateRows }}
+        data-tid="container"
+      >
+        {jobs.map(job => (
+          <TaskContainer jobId={job.id} key={job.id} />
+        ))}
       </div>
     );
   }
