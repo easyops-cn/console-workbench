@@ -110,7 +110,7 @@
     "type": "git",
     "url": "git+https://github.com/easyops-cn/console-workbench.git"
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/easyops-cn/console-workbench/issues"
   },

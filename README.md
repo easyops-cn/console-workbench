@@ -180,7 +180,7 @@ git pull upstream master
 
 ## License
 
-UNLICENSED
+MIT
 
 [npm-image]: https://img.shields.io/npm/v/console-workbench.svg?style=flat-square
 [github-tag-image]: https://img.shields.io/github/tag/easyops-cn/console-workbench.svg
