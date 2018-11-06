@@ -12,10 +12,11 @@
  */
 import { app, BrowserWindow } from 'electron';
 // import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
+// import log from 'electron-log';
 import MenuBuilder from './menu';
+import { forEachTaskPid } from './tasks';
 
-/* export default class AppUpdater {
+/* export default class AppUpdater {Z
   constructor() {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
@@ -52,10 +53,15 @@ const installExtensions = async () => {
  */
 
 app.on('window-all-closed', () => {
+  // Manually close pending task
+  forEachTaskPid(taskPid => {
+    process.kill(-taskPid);
+  });
+
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
   // if (process.platform !== 'darwin') {
-    app.quit();
+  app.quit();
   // }
 });
 
@@ -75,6 +81,10 @@ app.on('ready', async () => {
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
+
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   mainWindow.webContents.on('did-finish-load', () => {
@@ -84,7 +94,7 @@ app.on('ready', async () => {
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {
-      mainWindow.show();
+      // mainWindow.show();
       mainWindow.focus();
     }
   });
