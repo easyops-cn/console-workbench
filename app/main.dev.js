@@ -10,11 +10,11 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 // import { autoUpdater } from 'electron-updater';
 // import log from 'electron-log';
 import MenuBuilder from './menu';
-import { forEachTaskPid } from './tasks';
+// import { forEachTaskPid } from './tasks';
 
 /* export default class AppUpdater {Z
   constructor() {
@@ -48,13 +48,23 @@ const installExtensions = async () => {
   ).catch(console.log);
 };
 
+const taskPidSet = new Set();
+
+ipcMain.on('addSubprocess', (e, pid) => {
+  taskPidSet.add(pid);
+});
+
+ipcMain.on('removeSubprocess', (e, pid) => {
+  taskPidSet.delete(pid);
+});
+
 /**
  * Add event listeners...
  */
 
 app.on('window-all-closed', () => {
   // Manually close pending task
-  forEachTaskPid(taskPid => {
+  taskPidSet.forEach(taskPid => {
     process.kill(-taskPid);
   });
 
@@ -81,10 +91,6 @@ app.on('ready', async () => {
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show();
-  });
-
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   mainWindow.webContents.on('did-finish-load', () => {
@@ -94,7 +100,7 @@ app.on('ready', async () => {
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {
-      // mainWindow.show();
+      mainWindow.show();
       mainWindow.focus();
     }
   });
