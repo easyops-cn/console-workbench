@@ -31,8 +31,15 @@ export default class Home extends Component<Props> {
         </div>
         <div className={styles.toolbar}>
           <Link
+            to={routes.SETTINGS}
+            className={styles.btn}
+            title="Settings"
+          >
+            <i className="fa fa-cogs fa-2x" />
+          </Link>
+          <Link
             to={routes.JOB_CREATE}
-            className={styles['btn-add-job']}
+            className={styles.btn}
             title="Add Job"
           >
             <i className="fa fa-plus fa-2x" />

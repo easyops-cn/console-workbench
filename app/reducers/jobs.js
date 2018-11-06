@@ -14,7 +14,8 @@ import {
   JOB_EXIT,
   CLEAR_JOB_OUTPUT,
   ACTIVATE_JOB,
-  UPDATE_JOB
+  UPDATE_JOB,
+  REPLACE_JOBS
 } from '../actions/jobs';
 
 const ids = (state = [], action: Action) => {
@@ -23,6 +24,8 @@ const ids = (state = [], action: Action) => {
       return [...state, action.job.id];
     case REMOVE_JOB:
       return without(state, action.job.id);
+    case REPLACE_JOBS:
+      return action.jobs.map(job => job.id);
     default:
       return state;
   }
@@ -56,6 +59,17 @@ const entities = (state = {}, action: Action) => {
         ...state,
         [action.job.id]: undefined
       };
+    case REPLACE_JOBS:
+      return action.jobs.reduce((acc, job) => {
+        acc[job.id] = {
+          ...job,
+          starting: false,
+          running: false,
+          stopping: false,
+          output: ''
+        };
+        return acc;
+      }, {});
     case START_JOB:
       return {
         ...state,

@@ -1,11 +1,14 @@
 import { spawn } from 'child_process';
 import { max } from 'lodash';
+import { sync } from 'shell-env';
+import defaultShell from 'default-shell';
 import { addTask, findTaskByJobId, removeTaskByJobId } from '../utils/tasks';
 import storage from '../storage';
 
 export const ADD_JOB = 'ADD_JOB';
 export const UPDATE_JOB = 'UPDATE_JOB';
 export const REMOVE_JOB = 'REMOVE_JOB';
+export const REPLACE_JOBS = 'REPLACE_JOBS';
 export const START_JOB = 'START_JOB';
 export const STARTED_JOB = 'STARTED_JOB';
 export const STOP_JOB = 'STOP_JOB';
@@ -42,6 +45,14 @@ export const updateJob = ({ id, name, cmd, cwd }) => dispatch => {
   dispatch({
     type: UPDATE_JOB,
     job
+  });
+};
+
+export const replaceJobs = jobs => dispatch => {
+  storage.set('jobs', jobs);
+  dispatch({
+    type: REPLACE_JOBS,
+    jobs
   });
 };
 
@@ -86,11 +97,11 @@ export const startJob = job => dispatch => {
     job
   });
 
-  const task = spawn(job.cmd, ['--color'], {
+  const task = spawn(job.cmd, [], {
     detached: true,
     cwd: job.cwd,
-    env: process.env,
-    shell: true
+    env: sync(defaultShell),
+    shell: defaultShell
   });
 
   addTask(job.id, task);

@@ -1,0 +1,13 @@
+.form {
+  width: 90%;
+  max-width: 800px;
+  margin: 30px auto;
+}
+
+.form-control {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}

@@ -22,10 +22,14 @@
   display: block;
 }
 
-.btn-add-job {
+.btn {
   color: #5cb85c;
 }
 
-.btn-add-job:hover {
+.btn:hover {
   color: #4cae4c;
+}
+
+.btn + .btn {
+  margin-left: 20px;
 }

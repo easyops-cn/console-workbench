@@ -29,7 +29,9 @@ a:hover {
 }
 
 pre,
-code {
+code,
+input,
+textarea {
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 
