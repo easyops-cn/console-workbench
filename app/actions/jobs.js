@@ -148,6 +148,8 @@ export const stopJob = job => dispatch => {
     return;
   }
 
+  // Kill process group
+  // see https://linux.die.net/man/3/kill
   process.kill(-task.pid);
 
   return dispatch({

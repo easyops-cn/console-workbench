@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`jobs actions create activateJob action 1`] = `
+Object {
+  "job": Object {
+    "id": 1,
+    "name": "test job",
+  },
+  "type": "ACTIVATE_JOB",
+}
+`;
+
+exports[`jobs actions create clearJobOutput action 1`] = `
+Object {
+  "job": Object {
+    "id": 1,
+    "name": "test job",
+  },
+  "type": "CLEAR_JOB_OUTPUT",
+}
+`;
