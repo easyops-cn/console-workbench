@@ -17,6 +17,7 @@ import {
   UPDATE_JOB,
   REPLACE_JOBS
 } from '../actions/jobs';
+import printable from '../utils/printable';
 
 const ids = (state = [], action: Action) => {
   switch (action.type) {
@@ -40,8 +41,7 @@ const entities = (state = {}, action: Action) => {
           ...action.job,
           starting: false,
           running: false,
-          stopping: false,
-          output: ''
+          stopping: false
         }
       };
     case UPDATE_JOB:
@@ -65,8 +65,7 @@ const entities = (state = {}, action: Action) => {
           ...job,
           starting: false,
           running: false,
-          stopping: false,
-          output: ''
+          stopping: false
         };
         return acc;
       }, {});
@@ -76,7 +75,6 @@ const entities = (state = {}, action: Action) => {
         [action.job.id]: {
           ...state[action.job.id],
           starting: true,
-          output: `$ cd ${action.job.cwd}\n$ ${action.job.cmd}\n`,
           error: undefined
         }
       };
@@ -89,29 +87,7 @@ const entities = (state = {}, action: Action) => {
           running: true
         }
       };
-    case JOB_OUTPUT:
-      return {
-        ...state,
-        [action.job.id]: {
-          ...state[action.job.id],
-          output: (state[action.job.id].output || '') + action.output
-        }
-      };
     case JOB_CLOSE:
-      if (!state[action.job.id].running) {
-        return state;
-      }
-      return {
-        ...state,
-        [action.job.id]: {
-          ...state[action.job.id],
-          running: false,
-          stopping: false,
-          output: `${state[action.job.id].output}closed with code: ${
-            action.code
-          }, signal: ${action.signal}\n`
-        }
-      };
     case JOB_EXIT:
       if (!state[action.job.id].running) {
         return state;
@@ -121,10 +97,7 @@ const entities = (state = {}, action: Action) => {
         [action.job.id]: {
           ...state[action.job.id],
           running: false,
-          stopping: false,
-          output: `${state[action.job.id].output}exited with code: ${
-            action.code
-          }, signal: ${action.signal}\n`
+          stopping: false
         }
       };
     case JOB_ERROR:
@@ -141,17 +114,66 @@ const entities = (state = {}, action: Action) => {
         ...state,
         [action.job.id]: {
           ...state[action.job.id],
-          stopping: true,
-          output: `${state[action.job.id].output}^C\n`
+          stopping: true
         }
       };
+    default:
+      return state;
+  }
+};
+
+const outputs = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_JOB:
     case CLEAR_JOB_OUTPUT:
       return {
         ...state,
-        [action.job.id]: {
-          ...state[action.job.id],
-          output: ''
-        }
+        [action.job.id]: undefined
+      };
+    case REPLACE_JOBS:
+      return action.jobs.reduce((acc, job) => {
+        acc[job.id] = undefined;
+        return acc;
+      }, {});
+    case START_JOB:
+      return {
+        ...state,
+        [action.job.id]: printable(
+          undefined,
+          `$ cd ${action.job.cwd}\n$ ${action.job.cmd}\n`
+        )
+      };
+    case JOB_OUTPUT:
+      return {
+        ...state,
+        [action.job.id]: printable(state[action.job.id], action.output)
+      };
+    case JOB_CLOSE:
+      if (!state[action.job.id].running) {
+        return state;
+      }
+      return {
+        ...state,
+        [action.job.id]: printable(
+          state[action.job.id],
+          `closed with code: ${action.code}, signal: ${action.signal}\n`
+        )
+      };
+    case JOB_EXIT:
+      if (!state[action.job.id].running) {
+        return state;
+      }
+      return {
+        ...state,
+        [action.job.id]: printable(
+          state[action.job.id],
+          `exited with code: ${action.code}, signal: ${action.signal}\n`
+        )
+      };
+    case STOP_JOB:
+      return {
+        ...state,
+        [action.job.id]: printable(state[action.job.id], '^C\n')
       };
     default:
       return state;
@@ -170,6 +192,7 @@ const active = (state = null, action) => {
 const jobs = combineReducers({
   ids,
   entities,
+  outputs,
   active
 });
 

@@ -29,6 +29,7 @@ export const addJob = ({ name, cmd, cwd }) => dispatch => {
     cwd
   };
   storage.set('jobs', [...jobs, newJob]);
+
   dispatch({
     type: ADD_JOB,
     job: newJob
@@ -50,16 +51,22 @@ export const updateJob = ({ id, name, cmd, cwd }) => dispatch => {
 
 export const replaceJobs = jobs => dispatch => {
   storage.set('jobs', jobs);
+
   dispatch({
     type: REPLACE_JOBS,
     jobs
   });
 };
 
-export const removeJob = job => ({
-  type: REMOVE_JOB,
-  job
-});
+export const removeJob = job => dispatch => {
+  const jobs = storage.get('jobs');
+  storage.set('jobs', jobs.filter(item => item.id !== job.id));
+
+  dispatch({
+    type: REMOVE_JOB,
+    job
+  });
+};
 
 const jobOutput = (job, output) => ({
   type: JOB_OUTPUT,
@@ -112,10 +119,10 @@ export const startJob = job => dispatch => {
   });
 
   task.stdout.on('data', data => {
-    dispatch(jobOutput(job, data));
+    dispatch(jobOutput(job, data.toString()));
   });
   task.stderr.on('data', data => {
-    dispatch(jobOutput(job, data));
+    dispatch(jobOutput(job, data.toString()));
   });
   task.on('close', (code, signal) => {
     removeTaskByJobId(job.id);

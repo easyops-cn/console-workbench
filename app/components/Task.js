@@ -13,7 +13,13 @@ type Props = {
   clearJobOutput: Job => void,
   activateJob: Job => void,
   job: Job,
-  active: boolean
+  output: {
+    returned: string,
+    buffer: string[],
+    cursor: 0
+  },
+  active: boolean,
+  span: number
 };
 
 export default class Task extends Component<Props> {
@@ -102,8 +108,18 @@ export default class Task extends Component<Props> {
   }
 
   render() {
-    const { job, active, activateJob } = this.props;
-    const outputHtml = this.ansiUp.ansi_to_html(job.output);
+    const {
+      job,
+      output: { returned, buffer },
+      active,
+      activateJob,
+      span
+    } = this.props;
+    let log = buffer.join('');
+    if (returned !== undefined) {
+      log = `${returned}\n${log}`;
+    }
+    const outputHtml = this.ansiUp.ansi_to_html(log);
     const taskClass = classNames(styles.task, {
       [styles.active]: active
     });
@@ -112,12 +128,19 @@ export default class Task extends Component<Props> {
         Settings
       </button>
     ));
+    const taskStyle =
+      span > 1
+        ? {
+            gridColumn: `span ${span}`
+          }
+        : null;
     return (
       <a
         className={taskClass}
         role="link"
         tabIndex={0}
         onClick={() => activateJob(job)}
+        style={taskStyle}
       >
         <div className={styles.heading}>
           <span className={styles.name}>{job.name}</span>
@@ -138,7 +161,7 @@ export default class Task extends Component<Props> {
               Stop
             </button>
             <button type="button" onClick={this.clearJobOutput}>
-              Clear Output
+              Clear Log
             </button>
             <BtnSettings />
           </div>

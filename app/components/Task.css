@@ -50,6 +50,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column-reverse;
+  font-size: 11px;
 }
 
 .label {

@@ -21,6 +21,15 @@ if (jobs === undefined) {
   storage.set('jobs', jobs);
 }
 
+/* let preferences = storage.get('preferences');
+if (preferences === undefined) {
+  preferences = {
+    colorful: true,
+    autoAppendColorArgs: false
+  }
+  storage.set('preferences', preferences);
+} */
+
 const store = configureStore({
   jobs: {
     ids: jobs.map(job => job.id),
@@ -29,8 +38,7 @@ const store = configureStore({
         ...job,
         starting: false,
         running: false,
-        stopping: false,
-        output: ''
+        stopping: false
       };
       return acc;
     }, {})
