@@ -1,0 +1,3 @@
+exports.sync = () => ({
+  PATH: '/bin'
+});
