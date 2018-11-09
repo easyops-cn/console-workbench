@@ -20,7 +20,11 @@ export default class Home extends Component<Props> {
     const odd = jobIds.length % 2 === 1;
     return (
       <div className={styles.container}>
-        <div className={styles.tasks} style={{ gridTemplateRows }}>
+        <div
+          className={styles.tasks}
+          style={{ gridTemplateRows }}
+          data-tid="tasks-container"
+        >
           {jobIds.map((jobId, index) => (
             <TaskContainer
               jobId={jobId}

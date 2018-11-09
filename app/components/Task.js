@@ -124,7 +124,11 @@ export default class Task extends Component<Props> {
       [styles.active]: active
     });
     const BtnSettings = withRouter(({ history }) => (
-      <button type="button" onClick={() => history.push(`/edit/${job.id}`)}>
+      <button
+        type="button"
+        onClick={() => history.push(`/edit/${job.id}`)}
+        data-tid="btn-task-settings"
+      >
         Settings
       </button>
     ));
@@ -141,6 +145,7 @@ export default class Task extends Component<Props> {
         tabIndex={0}
         onClick={() => activateJob(job)}
         style={taskStyle}
+        data-tclass="task"
       >
         <div className={styles.heading}>
           <span className={styles.name}>{job.name}</span>

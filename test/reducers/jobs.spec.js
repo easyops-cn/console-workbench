@@ -1,3 +1,6 @@
+/* eslint-disable import/first */
+jest.mock('../../app/storage');
+
 import jobs from '../../app/reducers/jobs';
 import {
   ADD_JOB,
