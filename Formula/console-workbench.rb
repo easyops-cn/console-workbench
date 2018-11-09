@@ -1,4 +1,4 @@
-cask 'consoleworkbench' do
+cask 'console-workbench' do
   version '1.0.0'
   sha512 'cJZl7EZOaXI6NydglZ6QmahtoM/7hhrVFIhAbDhykBZcstSxACY4pBzIj1M95/mIrB2EH/8ucZjCyfC4QBIE9g=='
 
