@@ -29,8 +29,8 @@ MIT
 [npm-image]: https://img.shields.io/npm/v/console-workbench.svg?style=flat-square
 [github-tag-image]: https://img.shields.io/github/tag/easyops-cn/console-workbench.svg
 [github-tag-url]: https://github.com/easyops-cn/console-workbench/releases/latest
-[travis-image]: https://travis-ci.com/easyops-cn/console-workbench.svg?branch=master
-[travis-url]: https://travis-ci.com/easyops-cn/console-workbench
+[travis-image]: https://travis-ci.org/easyops-cn/console-workbench.svg?branch=master
+[travis-url]: https://travis-ci.org/easyops-cn/console-workbench
 [appveyor-image]: https://ci.appveyor.com/api/projects/status/github/easyops-cn/console-workbench?svg=true
 [appveyor-url]: https://ci.appveyor.com/project/easyops-cn/console-workbench/branch/master
 [david_img]: https://img.shields.io/david/easyops-cn/console-workbench.svg
