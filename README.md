@@ -10,6 +10,14 @@ Console Workbench 可以界面化管理多个命令行任务，这对当前多�
 
 > 初始化自 [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)。
 
+## Install
+
+```bash
+brew cask install https://raw.githubusercontent.com/easyops-cn/console-workbench/master/Formula/console-workbench.rb
+```
+
+![screenshot](https://user-images.githubusercontent.com/2338946/48256270-0d7feb00-e44a-11e8-84c2-341ad463ab19.jpg)
+
 ## Usage
 
 - 初始界面显示任务卡片列表
