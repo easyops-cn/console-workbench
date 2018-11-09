@@ -1,0 +1,325 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reducers jobs should handle ACTIVATE_JOB 1`] = `
+Object {
+  "active": 1,
+  "entities": Object {},
+  "ids": Array [],
+  "outputs": Object {},
+}
+`;
+
+exports[`reducers jobs should handle ADD_JOB 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -l",
+      "cwd": "/tmp",
+      "id": 1,
+      "name": "test job for ADD_JOB",
+      "running": false,
+      "starting": false,
+      "stopping": false,
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": undefined,
+  },
+}
+`;
+
+exports[`reducers jobs should handle CLEAR_JOB_OUTPUT 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -l",
+      "cwd": "/tmp",
+      "id": 1,
+      "name": "test job for CLEAR_JOB_OUTPUT",
+      "running": true,
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": undefined,
+  },
+}
+`;
+
+exports[`reducers jobs should handle JOB_CLOSE 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -l",
+      "cwd": "/tmp",
+      "id": 1,
+      "name": "test job for JOB_CLOSE",
+      "running": false,
+      "stopping": false,
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": Object {
+      "buffer": Array [],
+      "cursor": 0,
+      "returned": "$ ls -l
+drwxclosed with code: 15, signal: SIGTERM",
+    },
+  },
+}
+`;
+
+exports[`reducers jobs should handle JOB_ERROR 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -l",
+      "cwd": "/tmp",
+      "error": [Error: error on purpose],
+      "id": 1,
+      "name": "test job for JOB_ERROR",
+      "running": false,
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": Object {
+      "buffer": Array [
+        "drwx",
+      ],
+      "cursor": 4,
+      "returned": "$ ls -l",
+    },
+  },
+}
+`;
+
+exports[`reducers jobs should handle JOB_EXIT 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -l",
+      "cwd": "/tmp",
+      "id": 1,
+      "name": "test job for JOB_EXIT",
+      "running": false,
+      "stopping": false,
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": Object {
+      "buffer": Array [],
+      "cursor": 0,
+      "returned": "$ ls -l
+drwxexited with code: 1, signal: SIGHUP",
+    },
+  },
+}
+`;
+
+exports[`reducers jobs should handle JOB_OUTPUT 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -l",
+      "cwd": "/tmp",
+      "id": 1,
+      "name": "test job for JOB_OUTPUT",
+      "running": true,
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": Object {
+      "buffer": Array [],
+      "cursor": 0,
+      "returned": "$ ls -l
+drwx
+100% done.",
+    },
+  },
+}
+`;
+
+exports[`reducers jobs should handle REMOVE_JOB 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": undefined,
+  },
+  "ids": Array [],
+  "outputs": Object {
+    "1": undefined,
+  },
+}
+`;
+
+exports[`reducers jobs should handle REPLACE_JOBS 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -l",
+      "cwd": "/tmp",
+      "id": 1,
+      "name": "test job for REPLACE_JOBS",
+      "running": false,
+      "starting": false,
+      "stopping": false,
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": undefined,
+  },
+}
+`;
+
+exports[`reducers jobs should handle START_JOB 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -l",
+      "cwd": "/tmp",
+      "error": undefined,
+      "id": 1,
+      "name": "test job for START_JOB",
+      "starting": true,
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": Object {
+      "buffer": Array [],
+      "cursor": 0,
+      "returned": "$ cd /tmp
+$ ls -l",
+    },
+  },
+}
+`;
+
+exports[`reducers jobs should handle STARTED_JOB 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -l",
+      "cwd": "/tmp",
+      "id": 1,
+      "name": "test job for STARTED_JOB",
+      "running": true,
+      "starting": false,
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": Object {
+      "buffer": Array [
+        "drwx",
+      ],
+      "cursor": 4,
+      "returned": "$ ls -l",
+    },
+  },
+}
+`;
+
+exports[`reducers jobs should handle STOP_JOB 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -l",
+      "cwd": "/tmp",
+      "id": 1,
+      "name": "test job for STOP_JOB",
+      "running": true,
+      "stopping": true,
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": Object {
+      "buffer": Array [],
+      "cursor": 0,
+      "returned": "$ ls -l
+drwx^C",
+    },
+  },
+}
+`;
+
+exports[`reducers jobs should handle UPDATE_JOB 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -la",
+      "cwd": "/home",
+      "id": 1,
+      "name": "updated test job for UPDATE_JOB",
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": Object {
+      "buffer": Array [
+        "drwx",
+      ],
+      "cursor": 4,
+      "returned": "$ ls -l",
+    },
+  },
+}
+`;
+
+exports[`reducers jobs should handle initial state 1`] = `
+Object {
+  "active": null,
+  "entities": Object {},
+  "ids": Array [],
+  "outputs": Object {},
+}
+`;
+
+exports[`reducers jobs should handle unknown action type 1`] = `
+Object {
+  "active": null,
+  "entities": Object {},
+  "ids": Array [],
+  "outputs": Object {},
+}
+`;

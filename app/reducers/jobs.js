@@ -125,6 +125,7 @@ const entities = (state = {}, action: Action) => {
 const outputs = (state = {}, action) => {
   switch (action.type) {
     case ADD_JOB:
+    case REMOVE_JOB:
     case CLEAR_JOB_OUTPUT:
       return {
         ...state,
@@ -149,9 +150,6 @@ const outputs = (state = {}, action) => {
         [action.job.id]: printable(state[action.job.id], action.output)
       };
     case JOB_CLOSE:
-      if (!state[action.job.id].running) {
-        return state;
-      }
       return {
         ...state,
         [action.job.id]: printable(
@@ -160,9 +158,6 @@ const outputs = (state = {}, action) => {
         )
       };
     case JOB_EXIT:
-      if (!state[action.job.id].running) {
-        return state;
-      }
       return {
         ...state,
         [action.job.id]: printable(

@@ -26,37 +26,37 @@ export default class JobCreate extends Component<Props> {
 
     this.state = props.isEdit
       ? {
-          jobName: props.job.name,
+          name: props.job.name,
           cmd: props.job.cmd,
           cwd: props.job.cwd
         }
       : {
-          jobName: '',
+          name: '',
           cmd: '',
           cwd: ''
         };
   }
 
-  handleJobNameChange = e => {
+  handleJobNameChange = (e: Event) => {
     this.setState({
-      jobName: e.target.value
+      name: e.target.value
     });
   };
 
-  handleCmdChange = e => {
+  handleCmdChange = (e: Event) => {
     this.setState({
       cmd: e.target.value
     });
   };
 
-  handleCwdChange = e => {
+  handleCwdChange = (e: Event) => {
     this.setState({
       cwd: e.target.value
     });
   };
 
   storeJob = () => {
-    const { jobName: name, cmd, cwd } = this.state;
+    const { name, cmd, cwd } = this.state;
     if (!name || !cmd || !cwd) {
       return;
     }
@@ -87,8 +87,8 @@ export default class JobCreate extends Component<Props> {
   };
 
   render() {
-    const { jobName, cmd, cwd } = this.state;
-    const disabled = !jobName || !cmd || !cwd;
+    const { name, cmd, cwd } = this.state;
+    const disabled = !name || !cmd || !cwd;
     return (
       <form className={styles.form} onSubmit={this.storeJob}>
         <label htmlFor="jobName" className={styles['form-group']}>
@@ -97,14 +97,14 @@ export default class JobCreate extends Component<Props> {
             type="text"
             className={styles['form-control']}
             id="jobName"
-            value={jobName}
+            value={name}
             onChange={this.handleJobNameChange}
             placeholder="Console-W"
             required
           />
         </label>
 
-        <label htmlFor="jobName" className={styles['form-group']}>
+        <label htmlFor="name" className={styles['form-group']}>
           <span className={styles['form-label']}>Command:</span>
           <input
             type="text"
@@ -117,7 +117,7 @@ export default class JobCreate extends Component<Props> {
           />
         </label>
 
-        <label htmlFor="jobName" className={styles['form-group']}>
+        <label htmlFor="name" className={styles['form-group']}>
           <span className={styles['form-label']}>
             Current Working Directory:
           </span>

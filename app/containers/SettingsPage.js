@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Settings from '../components/Settings';
 import { replaceJobs } from '../actions/jobs';
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     jobs: state.jobs.ids.map(id => state.jobs.entities[id])
   };
