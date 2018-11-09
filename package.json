@@ -110,6 +110,11 @@
     "type": "git",
     "url": "git+https://github.com/easyops-cn/console-workbench.git"
   },
+  "author": {
+    "name": "Wang Shenwei",
+    "email": "wangshenwei@qq.com",
+    "url": "https://www.easyops.cn/"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/easyops-cn/console-workbench/issues"
