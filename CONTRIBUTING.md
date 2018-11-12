@@ -91,3 +91,17 @@ This project comes with Flow support out of the box! You can annotate your code 
 ## Dispatching redux actions from main process
 
 See [#118](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/118) and [#108](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/108)
+
+## How to keep your project updated with the boilerplate
+
+If your application is a fork from this repo, you can add this repo to another git remote:
+
+```sh
+git remote add upstream git@github.com:electron-react-boilerplate/electron-react-boilerplate.git
+```
+
+Then, use git to merge some latest commits:
+
+```sh
+git pull upstream master
+```
