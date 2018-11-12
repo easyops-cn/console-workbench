@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Settings from '../components/Settings';
-import { replaceJobs } from '../actions/jobs';
+import { replaceJobs, stopJob } from '../actions/jobs';
 
 function mapStateToProps(state) {
   return {
@@ -12,7 +12,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      replaceJobs
+      replaceJobs,
+      stopJob
     },
     dispatch
   );

@@ -9,6 +9,7 @@ import styles from './Settings.css';
 type Props = {
   jobs: Job[],
   replaceJobs: (Job[]) => void,
+  stopJob: Job => void,
   history: {
     push: string => void
   }
@@ -37,7 +38,21 @@ export default class Settings extends Component<Props> {
     });
   };
 
-  storeSettings = () => {
+  applySettings = () => {
+    const runningJobs = this.props.jobs.filter(job => job.running);
+    if (runningJobs.length > 0) {
+      // eslint-disable-next-line no-alert
+      if (
+        !window.confirm(
+          'There are running jobs, are you sure to stop them before apply setting?'
+        )
+      ) {
+        return;
+      }
+      runningJobs.forEach(job => {
+        this.props.stopJob(job);
+      });
+    }
     let jobs;
     try {
       const settings = JSON.parse(this.state.settings);
@@ -58,7 +73,7 @@ export default class Settings extends Component<Props> {
 
   render() {
     return (
-      <form className={styles.form} onSubmit={this.storeSettings}>
+      <form className={styles.form} onSubmit={this.applySettings}>
         <div className={styles['form-group']}>
           <textarea
             className={styles['form-control']}
@@ -69,7 +84,7 @@ export default class Settings extends Component<Props> {
         </div>
         <div className={styles['form-group']}>
           <button type="submit" style={{ marginRight: '10px' }}>
-            Store
+            Apply
           </button>
           <Link to={routes.HOME}>Cancel</Link>
         </div>
