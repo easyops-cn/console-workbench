@@ -38,11 +38,12 @@ export default class Settings extends Component<Props> {
     });
   };
 
-  applySettings = () => {
+  applySettings = event => {
+    event.preventDefault();
     const runningJobs = this.props.jobs.filter(job => job.running);
     if (runningJobs.length > 0) {
-      // eslint-disable-next-line no-alert
       if (
+        // eslint-disable-next-line no-alert
         !window.confirm(
           'There are running jobs, are you sure to stop them before apply setting?'
         )
