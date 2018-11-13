@@ -30,6 +30,8 @@ export default function printable(
     returned += bufferCopy.slice(0, separate).join('');
     bufferCopy = bufferCopy.slice(separate + 1);
     cursor -= separate + 1;
+    // Keep only last 65535 characters
+    returned = returned.substr(-65535, 65535);
   }
   return {
     returned,

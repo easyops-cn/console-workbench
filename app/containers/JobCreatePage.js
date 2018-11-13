@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import JobCreate from '../components/JobCreate';
 import { addJob } from '../actions/jobs';
 
-function mapStateToProps() {
+function mapStateToProps(state) {
   return {
-    isEdit: false
+    isEdit: false,
+    jobs: state.jobs.ids.map(id => state.jobs.entities[id])
   };
 }
 

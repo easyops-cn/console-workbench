@@ -13,6 +13,7 @@ type Props = {
   removeJob: Job => void,
   job: Job,
   isEdit: boolean,
+  jobs: Job[],
   history: {
     push: string => void
   }
@@ -31,11 +32,42 @@ export default class JobCreate extends Component<Props> {
           cwd: props.job.cwd
         }
       : {
+          template: '',
           name: '',
           cmd: '',
           cwd: ''
         };
   }
+
+  handleTemplateChange = (e: Event) => {
+    const newState = {
+      template: e.target.value
+    };
+    let selectedJob;
+    // eslint-disable-next-line default-case
+    switch (newState.template) {
+      case 'console-plugins':
+        newState.name = 'PLUGIN_NAME';
+        newState.cmd = 'yarn start --scope=@console-plugin/PLUGIN_NAME --color';
+        newState.cwd = `${os.homedir()}/easyops/console-plugins`;
+        break;
+      case 'Console-W':
+        newState.name = 'PACKAGE_NAME';
+        newState.cmd =
+          'lerna run start --scope=@console-plugin/PACKAGE_NAME --stream --color';
+        newState.cwd = `${os.homedir()}/easyops/Console-W`;
+        break;
+      case '':
+        break;
+      default:
+        selectedJob = this.props.jobs.find(
+          job => job.id === +newState.template
+        );
+        newState.cmd = selectedJob.cmd;
+        newState.cwd = selectedJob.cwd;
+    }
+    this.setState(newState);
+  };
 
   handleJobNameChange = (e: Event) => {
     this.setState({
@@ -87,10 +119,36 @@ export default class JobCreate extends Component<Props> {
   };
 
   render() {
-    const { name, cmd, cwd } = this.state;
+    const { name, cmd, cwd, template } = this.state;
+    const { isEdit, jobs } = this.props;
     const disabled = !name || !cmd || !cwd;
     return (
       <form className={styles.form} onSubmit={this.storeJob}>
+        {isEdit ? null : (
+          <label htmlFor="jobTemplate" className={styles['form-group']}>
+            <span className={styles['form-label']}>Template:</span>
+            <select
+              className={styles['form-control']}
+              id="jobTemplate"
+              value={template}
+              onChange={this.handleTemplateChange}
+            >
+              <option value="">-- no template --</option>
+              <option value="Console-W">
+                -- Default Console-W packages --
+              </option>
+              <option value="console-plugins">
+                -- Default console-plugins packages --
+              </option>
+              {jobs.map(job => (
+                <option value={job.id} key={job.id}>
+                  {job.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+
         <label htmlFor="jobName" className={styles['form-group']}>
           <span className={styles['form-label']}>Job Name:</span>
           <input
@@ -104,12 +162,12 @@ export default class JobCreate extends Component<Props> {
           />
         </label>
 
-        <label htmlFor="name" className={styles['form-group']}>
+        <label htmlFor="jobCmd" className={styles['form-group']}>
           <span className={styles['form-label']}>Command:</span>
           <input
             type="text"
             className={styles['form-control']}
-            id="cmd"
+            id="jobCmd"
             value={cmd}
             onChange={this.handleCmdChange}
             placeholder="yarn start"
@@ -117,14 +175,14 @@ export default class JobCreate extends Component<Props> {
           />
         </label>
 
-        <label htmlFor="name" className={styles['form-group']}>
+        <label htmlFor="jobCwd" className={styles['form-group']}>
           <span className={styles['form-label']}>
             Current Working Directory:
           </span>
           <input
             type="text"
             className={styles['form-control']}
-            id="cwd"
+            id="jobCwd"
             value={cwd}
             onChange={this.handleCwdChange}
             placeholder={`${os.homedir()}/easyops/Console-W`}
@@ -140,10 +198,10 @@ export default class JobCreate extends Component<Props> {
               disabled={disabled}
               style={{ marginRight: '10px' }}
             >
-              {this.props.isEdit ? 'Update ' : 'Add '} Job
+              {isEdit ? 'Update ' : 'Add '} Job
             </button>
             <Link to={routes.HOME}>Cancel</Link>
-            {this.props.isEdit ? (
+            {isEdit ? (
               <button
                 type="button"
                 style={{ color: '#f34235', float: 'right' }}
