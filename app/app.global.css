@@ -13,7 +13,7 @@ body {
   color: #d4d4d4;
   height: 100vh;
   background-color: #1e1e1e;
-  font-family: Arial, Helvetica, Helvetica Neue, serif;
+  font-family: Arial, Helvetica, 'Helvetica Neue', serif;
   font-size: 12px;
   overflow: hidden;
   margin: 0;
@@ -44,4 +44,8 @@ textarea {
 
 #root {
   height: 100%;
+}
+
+[role='button'] {
+  cursor: pointer;
 }

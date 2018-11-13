@@ -7,7 +7,8 @@ import routes from '../constants/routes';
 import styles from './Home.css';
 
 type Props = {
-  jobIds: string[]
+  jobIds: string[],
+  stopAllJobs: () => void
 };
 
 export default class Home extends Component<Props> {
@@ -34,6 +35,15 @@ export default class Home extends Component<Props> {
           ))}
         </div>
         <div className={styles.toolbar}>
+          <a
+            role="button"
+            className={styles.btn}
+            onClick={this.props.stopAllJobs}
+            title="Stop All"
+            tabIndex={-1}
+          >
+            <i className="fa fa-stop fa-2x" />
+          </a>
           <Link to={routes.SETTINGS} className={styles.btn} title="Settings">
             <i className="fa fa-cog fa-2x" />
           </Link>

@@ -244,6 +244,49 @@ describe('jobs actions', () => {
     sandbox.restore();
   });
 
+  it('create stopAllJobs action', () => {
+    const mockKill = sandbox.stub(process, 'kill');
+
+    const fn = actions.stopAllJobs();
+    expect(fn).toBeInstanceOf(Function);
+
+    const deepDispatch = spy();
+    const dispatch = action => action(deepDispatch);
+    const getState = () => ({
+      jobs: {
+        ids: [1, 3],
+        entities: {
+          1: {
+            id: 1,
+            name: 'test job 1',
+            running: true
+          },
+          3: {
+            id: 3,
+            name: 'test job 3',
+            running: false
+          }
+        }
+      }
+    });
+    fn(dispatch, getState);
+
+    expect(mockKill.calledWith(-65536)).toBe(true);
+
+    expect(
+      deepDispatch.calledWith({
+        type: actions.STOP_JOB,
+        job: {
+          id: 1,
+          name: 'test job 1',
+          running: true
+        }
+      })
+    ).toBe(true);
+
+    sandbox.restore();
+  });
+
   it('create clearJobOutput action', () => {
     expect(
       actions.clearJobOutput({

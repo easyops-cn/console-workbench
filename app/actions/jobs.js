@@ -167,3 +167,11 @@ export const activateJob = job => ({
   type: ACTIVATE_JOB,
   job
 });
+
+export const stopAllJobs = () => (dispatch, getState) => {
+  const { ids, entities } = getState().jobs;
+  ids.forEach(id => {
+    const job = entities[id];
+    dispatch(stopJob(job));
+  });
+};
