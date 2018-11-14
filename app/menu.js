@@ -1,5 +1,6 @@
 // @flow
 import { app, Menu, shell, BrowserWindow } from 'electron';
+import { checkForUpdates } from './checkForUpdates';
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
@@ -50,6 +51,10 @@ export default class MenuBuilder {
         {
           label: 'About ConsoleWorkbench',
           selector: 'orderFrontStandardAboutPanel:'
+        },
+        {
+          label: 'Check For Updates…',
+          click: checkForUpdates
         },
         { type: 'separator' },
         { label: 'Services', submenu: [] },
