@@ -6,19 +6,22 @@ import childProcess from 'child_process';
 import { ipcRenderer } from 'electron';
 import { EventEmitter } from 'events';
 import * as actions from '../../app/actions/jobs';
-import { addTask } from '../../app/utils/tasks';
+import { addTask, removeTaskByJobId } from '../../app/utils/tasks';
 import storage from '../../app/storage';
 
 const sandbox = createSandbox();
 
 describe('jobs actions', () => {
-  beforeAll(() => {
-    addTask(1, { pid: 65536 });
-  });
-
   beforeEach(() => {
     // eslint-disable-next-line no-underscore-dangle
     storage.__reset();
+    addTask(1, { pid: 65536 });
+    addTask(2, { pid: 65537 });
+  });
+
+  afterEach(() => {
+    removeTaskByJobId(1);
+    removeTaskByJobId(2);
   });
 
   it('create addJob action', () => {
@@ -254,11 +257,16 @@ describe('jobs actions', () => {
     const dispatch = action => action(deepDispatch);
     const getState = () => ({
       jobs: {
-        ids: [1, 3],
+        ids: [1, 2, 3],
         entities: {
           1: {
             id: 1,
             name: 'test job 1',
+            running: true
+          },
+          2: {
+            id: 2,
+            name: 'test job 2',
             running: true
           },
           3: {
@@ -272,6 +280,7 @@ describe('jobs actions', () => {
     fn(dispatch, getState);
 
     expect(mockKill.calledWith(-65536)).toBe(true);
+    expect(mockKill.calledWith(-65537)).toBe(true);
 
     expect(
       deepDispatch.calledWith({
@@ -279,6 +288,17 @@ describe('jobs actions', () => {
         job: {
           id: 1,
           name: 'test job 1',
+          running: true
+        }
+      })
+    ).toBe(true);
+
+    expect(
+      deepDispatch.calledWith({
+        type: actions.STOP_JOB,
+        job: {
+          id: 2,
+          name: 'test job 2',
           running: true
         }
       })
