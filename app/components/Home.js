@@ -14,6 +14,13 @@ type Props = {
 export default class Home extends Component<Props> {
   props: Props;
 
+  stopAllJobs = () => {
+    // eslint-disable-next-line no-alert
+    if (window.confirm('Are you sure to stop all running jobs?')) {
+      this.props.stopAllJobs();
+    }
+  };
+
   render() {
     const { jobIds } = this.props;
     const rows = Math.ceil(jobIds.length / 2);
@@ -38,7 +45,7 @@ export default class Home extends Component<Props> {
           <a
             role="button"
             className={styles.btn}
-            onClick={this.props.stopAllJobs}
+            onClick={this.stopAllJobs}
             title="Stop All"
             tabIndex={-1}
           >
