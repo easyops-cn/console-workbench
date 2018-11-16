@@ -126,7 +126,7 @@ export default class Task extends Component<Props> {
     const BtnSettings = withRouter(({ history }) => (
       <button
         type="button"
-        onClick={() => history.push(`/edit/${job.id}`)}
+        onClick={() => history.push(`/job/${job.id}/edit`)}
         data-tid="btn-task-settings"
       >
         Settings

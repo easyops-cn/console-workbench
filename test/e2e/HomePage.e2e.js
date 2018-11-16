@@ -57,11 +57,11 @@ test('should navigate to /create', async t => {
     .contains('/create');
 });
 
-test('should navigate to /edit/1', async t => {
+test('should navigate to /job/1/edit', async t => {
   await waitForReact();
   await t
     .hover(firstTask)
     .click(firstTaskSettingsBtn)
     .expect(getPageUrl())
-    .contains('/edit/1');
+    .contains('/job/1/edit');
 });
