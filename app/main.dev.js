@@ -10,12 +10,20 @@
  *
  * @flow
  */
-import { app, BrowserWindow, ipcMain, Tray, nativeImage } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Tray,
+  nativeImage,
+  dialog
+} from 'electron';
 import path from 'path';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
 let tray = null;
+let showExitPrompt = true;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -62,11 +70,7 @@ app.on('window-all-closed', () => {
     process.kill(-taskPid);
   });
 
-  // Respect the OSX convention of having the application in memory even
-  // after all windows have been closed
-  // if (process.platform !== 'darwin') {
   app.quit();
-  // }
 });
 
 app.on('ready', async () => {
@@ -99,6 +103,26 @@ app.on('ready', async () => {
     }
   });
 
+  mainWindow.on('close', e => {
+    if (taskPidSet.size > 0 && showExitPrompt) {
+      e.preventDefault();
+      dialog.showMessageBox(
+        {
+          type: 'question',
+          title: 'Confirm',
+          message: 'There are running jobs, stop them and quit?',
+          buttons: ['Stop and Quit', 'Cancel']
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            showExitPrompt = false;
+            mainWindow.close();
+          }
+        }
+      );
+    }
+  });
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -107,16 +131,16 @@ app.on('ready', async () => {
   menuBuilder.buildMenu();
 
   const trayIcon = nativeImage.createFromPath(
-    path.join(__dirname, '../resources/icons/16x16.png')
+    path.join(__dirname, './assets/tray.png')
   );
   tray = new Tray(trayIcon);
   tray.setTitle('0');
 
   tray.on('click', () => {
-    if (mainWindow.isVisible()) {
-      mainWindow.hide();
-    } else {
+    if (!mainWindow.isVisible()) {
       mainWindow.show();
+    } else if (!mainWindow.isFocused()) {
+      mainWindow.focus();
     }
   });
 });
