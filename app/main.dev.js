@@ -10,10 +10,12 @@
  *
  * @flow
  */
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, Tray, nativeImage } from 'electron';
+import path from 'path';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
+let tray = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -41,10 +43,13 @@ const taskPidSet = new Set();
 
 ipcMain.on('addSubprocess', (e, pid) => {
   taskPidSet.add(pid);
+  // Show current running tasks count beside tray
+  tray.setTitle(taskPidSet.size.toString());
 });
 
 ipcMain.on('removeSubprocess', (e, pid) => {
   taskPidSet.delete(pid);
+  tray.setTitle(taskPidSet.size.toString());
 });
 
 /**
@@ -100,4 +105,18 @@ app.on('ready', async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
+
+  const trayIcon = nativeImage.createFromPath(
+    path.join(__dirname, '../resources/icons/16x16.png')
+  );
+  tray = new Tray(trayIcon);
+  tray.setTitle('0');
+
+  tray.on('click', () => {
+    if (mainWindow.isVisible()) {
+      mainWindow.hide();
+    } else {
+      mainWindow.show();
+    }
+  });
 });
