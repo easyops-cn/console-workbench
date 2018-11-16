@@ -28,6 +28,7 @@ a:hover {
   color: cyan;
 }
 
+.text-code,
 pre,
 code,
 input,
@@ -48,4 +49,12 @@ textarea {
 
 [role='button'] {
   cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.break-word {
+  word-break: break-all;
 }

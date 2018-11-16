@@ -129,7 +129,16 @@ export default class Task extends Component<Props> {
         onClick={() => history.push(`/job/${job.id}/edit`)}
         data-tid="btn-task-settings"
       >
-        Settings
+        <i className="fa fa-cog" title="Settings" />
+      </button>
+    ));
+    const BtnLinks = withRouter(({ history }) => (
+      <button
+        type="button"
+        onClick={() => history.push(`/job/${job.id}/links`)}
+        data-tid="btn-task-links"
+      >
+        <i className="fa fa-link" title="Show Links" />
       </button>
     ));
     const taskStyle =
@@ -156,19 +165,20 @@ export default class Task extends Component<Props> {
               onClick={this.startJob}
               disabled={job.starting || job.running || job.stopping}
             >
-              Start
+              <i className="fa fa-play" title="Start" />
             </button>
             <button
               type="button"
               onClick={this.stopJob}
               disabled={job.starting || !job.running || job.stopping}
             >
-              Stop
+              <i className="fa fa-stop" title="Stop" />
             </button>
             <button type="button" onClick={this.clearJobOutput}>
-              Clear Log
+              <i className="fa fa-eraser" title="Clear Log" />
             </button>
             <BtnSettings />
+            <BtnLinks />
           </div>
         </div>
         <pre className={styles.output}>

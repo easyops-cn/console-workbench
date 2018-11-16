@@ -51,7 +51,8 @@ const entities = (state = {}, action: Action) => {
           ...state[action.job.id],
           name: action.job.name,
           cmd: action.job.cmd,
-          cwd: action.job.cwd
+          cwd: action.job.cwd,
+          subPackageDir: action.job.subPackageDir
         }
       };
     case REMOVE_JOB:

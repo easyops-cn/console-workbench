@@ -1,0 +1,29 @@
+.links-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 30px auto;
+}
+
+.table-links {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-links th,
+.table-links td {
+  border: 1px solid #444;
+  padding: 3px 10px;
+}
+
+.table-links tr:hover td {
+  color: cyan;
+}
+
+.toolbar {
+  margin-top: 15px;
+}
+
+.root-path {
+  color: #777;
+  font-size: 11px;
+}

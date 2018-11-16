@@ -29,13 +29,15 @@ export default class JobCreate extends Component<Props> {
       ? {
           name: props.job.name,
           cmd: props.job.cmd,
-          cwd: props.job.cwd
+          cwd: props.job.cwd,
+          subPackageDir: props.job.subPackageDir || ''
         }
       : {
           template: '',
           name: '',
           cmd: '',
-          cwd: ''
+          cwd: '',
+          subPackageDir: ''
         };
   }
 
@@ -50,12 +52,14 @@ export default class JobCreate extends Component<Props> {
         newState.name = 'PLUGIN_NAME';
         newState.cmd = 'yarn start --scope=@console-plugin/PLUGIN_NAME --color';
         newState.cwd = `${os.homedir()}/easyops/console-plugins`;
+        newState.subPackageDir = 'packages/PLUGIN_NAME';
         break;
       case 'Console-W':
         newState.name = 'PACKAGE_NAME';
         newState.cmd =
           'lerna run start --scope=@console-plugin/PACKAGE_NAME --stream --color';
         newState.cwd = `${os.homedir()}/easyops/Console-W`;
+        newState.subPackageDir = 'packages/PLUGIN_NAME';
         break;
       case '':
         break;
@@ -65,6 +69,7 @@ export default class JobCreate extends Component<Props> {
         );
         newState.cmd = selectedJob.cmd;
         newState.cwd = selectedJob.cwd;
+        newState.subPackageDir = selectedJob.subPackageDir || '';
     }
     this.setState(newState);
   };
@@ -87,8 +92,15 @@ export default class JobCreate extends Component<Props> {
     });
   };
 
-  storeJob = () => {
-    const { name, cmd, cwd } = this.state;
+  handleSubPackageDirChange = (e: Event) => {
+    this.setState({
+      subPackageDir: e.target.value
+    });
+  };
+
+  storeJob = event => {
+    event.preventDefault();
+    const { name, cmd, cwd, subPackageDir } = this.state;
     if (!name || !cmd || !cwd) {
       return;
     }
@@ -97,13 +109,15 @@ export default class JobCreate extends Component<Props> {
         id: this.props.job.id,
         name,
         cmd,
-        cwd
+        cwd,
+        subPackageDir
       });
     } else {
       this.props.addJob({
         name,
         cmd,
-        cwd
+        cwd,
+        subPackageDir
       });
     }
     this.props.history.push(routes.HOME);
@@ -119,7 +133,7 @@ export default class JobCreate extends Component<Props> {
   };
 
   render() {
-    const { name, cmd, cwd, template } = this.state;
+    const { name, cmd, cwd, subPackageDir, template } = this.state;
     const { isEdit, jobs } = this.props;
     const disabled = !name || !cmd || !cwd;
     return (
@@ -186,6 +200,19 @@ export default class JobCreate extends Component<Props> {
             value={cwd}
             onChange={this.handleCwdChange}
             placeholder={`${os.homedir()}/easyops/Console-W`}
+            required
+          />
+        </label>
+
+        <label htmlFor="jobSubPackageDir" className={styles['form-group']}>
+          <span className={styles['form-label']}>Sub Package Dir:</span>
+          <input
+            type="text"
+            className={styles['form-control']}
+            id="jobSubPackageDir"
+            value={subPackageDir}
+            onChange={this.handleSubPackageDirChange}
+            placeholder="Relative to CWD (leave empty if equals to CWD)"
             required
           />
         </label>

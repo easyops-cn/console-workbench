@@ -28,7 +28,8 @@ describe('jobs actions', () => {
     const fn = actions.addJob({
       name: 'test job for addJob action',
       cmd: 'ls -l',
-      cwd: '/tmp'
+      cwd: '/tmp',
+      subPackageDir: 'sub/pkg'
     });
     expect(fn).toBeInstanceOf(Function);
 
@@ -42,7 +43,8 @@ describe('jobs actions', () => {
           id: 2,
           name: 'test job for addJob action',
           cmd: 'ls -l',
-          cwd: '/tmp'
+          cwd: '/tmp',
+          subPackageDir: 'sub/pkg'
         }
       })
     ).toBe(true);
@@ -53,7 +55,8 @@ describe('jobs actions', () => {
       id: 1,
       name: 'test job for updateJob action',
       cmd: 'ls -l',
-      cwd: '/tmp'
+      cwd: '/tmp',
+      subPackageDir: 'sub/pkg'
     });
     expect(fn).toBeInstanceOf(Function);
 
@@ -67,7 +70,8 @@ describe('jobs actions', () => {
           id: 1,
           name: 'test job for updateJob action',
           cmd: 'ls -l',
-          cwd: '/tmp'
+          cwd: '/tmp',
+          subPackageDir: 'sub/pkg'
         }
       })
     ).toBe(true);
