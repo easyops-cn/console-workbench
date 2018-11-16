@@ -7,6 +7,7 @@ const tasksContainerSelector = Selector('[data-tid="tasks-container"]');
 const tasksSelector = Selector('[data-tclass="task"]');
 const firstTask = tasksSelector.nth(0);
 const firstTaskSettingsBtn = firstTask.find('[data-tid="btn-task-settings"]');
+const firstTaskLinksBtn = firstTask.find('[data-tid="btn-task-links"]');
 const assertNoConsoleErrors = async t => {
   const { error } = await t.getBrowserConsoleMessages();
   await t.expect(error).eql([]);
@@ -64,4 +65,14 @@ test('should navigate to /job/1/edit', async t => {
     .click(firstTaskSettingsBtn)
     .expect(getPageUrl())
     .contains('/job/1/edit');
+});
+
+test('should navigate to /job/1/links', async t => {
+  await waitForReact();
+  await t
+    .setNativeDialogHandler(() => true)
+    .hover(firstTask)
+    .click(firstTaskLinksBtn)
+    .expect(getPageUrl())
+    .contains('/job/1/links');
 });

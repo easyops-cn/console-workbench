@@ -289,6 +289,7 @@ Object {
       "cwd": "/home",
       "id": 1,
       "name": "updated test job for UPDATE_JOB",
+      "subPackageDir": "new-sub/pkg",
     },
   },
   "ids": Array [

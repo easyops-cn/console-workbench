@@ -3,6 +3,7 @@ export type Job = {
   name: string,
   cmd: string,
   cwd: string,
+  subPackageDir: string,
   running: boolean,
   starting: boolean,
   stopping: boolean,

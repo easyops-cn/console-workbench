@@ -41,6 +41,10 @@
   visibility: visible;
 }
 
+.toolbar button + button {
+  margin-left: 5px;
+}
+
 .output {
   margin: 0;
   padding: 10px;

@@ -48,7 +48,8 @@ describe('reducers', () => {
                 id: 1,
                 name: 'test job for UPDATE_JOB',
                 cmd: 'ls -l',
-                cwd: '/tmp'
+                cwd: '/tmp',
+                subPackageDir: 'sub/pkg'
               }
             },
             outputs: {
@@ -65,7 +66,8 @@ describe('reducers', () => {
               id: 1,
               name: 'updated test job for UPDATE_JOB',
               cmd: 'ls -la',
-              cwd: '/home'
+              cwd: '/home',
+              subPackageDir: 'new-sub/pkg'
             }
           }
         )

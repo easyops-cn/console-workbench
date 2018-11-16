@@ -19,14 +19,15 @@ export const JOB_EXIT = 'JOB_EXIT';
 export const CLEAR_JOB_OUTPUT = 'CLEAR_JOB_OUTPUT';
 export const ACTIVATE_JOB = 'ACTIVATE_JOB';
 
-export const addJob = ({ name, cmd, cwd }) => dispatch => {
+export const addJob = ({ name, cmd, cwd, subPackageDir }) => dispatch => {
   const jobs = storage.get('jobs', []);
   const nextId = jobs.length === 0 ? 1 : max(jobs.map(item => item.id)) + 1;
   const newJob = {
     id: nextId,
     name,
     cmd,
-    cwd
+    cwd,
+    subPackageDir
   };
   storage.set('jobs', [...jobs, newJob]);
 
@@ -36,8 +37,14 @@ export const addJob = ({ name, cmd, cwd }) => dispatch => {
   });
 };
 
-export const updateJob = ({ id, name, cmd, cwd }) => dispatch => {
-  const job = { id, name, cmd, cwd };
+export const updateJob = ({
+  id,
+  name,
+  cmd,
+  cwd,
+  subPackageDir
+}) => dispatch => {
+  const job = { id, name, cmd, cwd, subPackageDir };
   const jobs = storage.get('jobs');
   const originalJob = jobs.find(item => item.id === job.id);
   Object.assign(originalJob, job);
