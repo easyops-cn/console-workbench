@@ -4,6 +4,8 @@ import { spawnSync } from 'child_process';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { sync } from 'shell-env';
+import defaultShell from 'default-shell';
 import routes from '../constants/routes';
 import { findNpmLinks } from '../utils/findNpmLinks';
 import type { Job } from '../constants/types';
@@ -76,12 +78,13 @@ export default class JobLinks extends Component<Props> {
   yarnLink(link) {
     const result = spawnSync('yarn', ['link', link.packageName], {
       encoding: 'utf8',
+      env: sync(defaultShell),
       cwd: this.getSubPackageDir()
     });
     if (result.error) {
       console.error(result.error);
       // eslint-disable-next-line no-alert
-      window.alert(result.error.toString());
+      window.alert(`yarn link ${link.packageName}: ${result.error.toString()}`);
       return;
     }
     this.initLocalLinks();
@@ -90,12 +93,15 @@ export default class JobLinks extends Component<Props> {
   yarnUnlink(link) {
     const result = spawnSync('yarn', ['unlink', link.packageName], {
       encoding: 'utf8',
+      env: sync(defaultShell),
       cwd: this.getSubPackageDir()
     });
     if (result.error) {
       console.error(result.error);
       // eslint-disable-next-line no-alert
-      window.alert(result.error.toString());
+      window.alert(
+        `yarn unlink ${link.packageName}: ${result.error.toString()}`
+      );
       return;
     }
     this.initLocalLinks();
