@@ -108,7 +108,7 @@ export default class JobLinks extends Component<Props> {
     }
     return (
       <div>
-        <h3>
+        <h3 style={{ marginTop: 0 }}>
           Local Links:{' '}
           <code className={classNames(styles['root-path'], 'text-code')}>
             &lt;
