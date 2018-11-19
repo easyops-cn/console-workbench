@@ -213,7 +213,6 @@ export default class JobCreate extends Component<Props> {
             value={subPackageDir}
             onChange={this.handleSubPackageDirChange}
             placeholder="Relative to CWD (leave empty if equals to CWD)"
-            required
           />
         </label>
 
