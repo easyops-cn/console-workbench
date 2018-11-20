@@ -107,6 +107,16 @@ export default class JobLinks extends Component<Props> {
     this.initLocalLinks();
   }
 
+  renderLocalLinkTarget(link) {
+    const target = path.resolve(
+      this.getLocalLinksDir(),
+      link.packageName,
+      '..',
+      link.target
+    );
+    return link.exists ? target : <del>{target}</del>;
+  }
+
   renderLocalLinks() {
     const { localLoading, localLinks } = this.state;
     if (localLoading) {
@@ -135,12 +145,7 @@ export default class JobLinks extends Component<Props> {
               <tr key={link.packageName}>
                 <td className="break-word">{link.packageName}</td>
                 <td className="break-word">
-                  {path.resolve(
-                    this.getLocalLinksDir(),
-                    link.packageName,
-                    '..',
-                    link.link
-                  )}
+                  {this.renderLocalLinkTarget(link)}
                 </td>
                 <td>
                   <button type="button" onClick={() => this.yarnUnlink(link)}>
@@ -189,7 +194,9 @@ export default class JobLinks extends Component<Props> {
             {globalLinks.map(link => (
               <tr key={link.packageName}>
                 <td className="break-word">{link.packageName}</td>
-                <td className="break-word">{link.link}</td>
+                <td className="break-word">
+                  {link.exists ? link.target : <del>{link.target}</del>}
+                </td>
                 <td>
                   {localLinks.some(
                     localLink => localLink.packageName === link.packageName

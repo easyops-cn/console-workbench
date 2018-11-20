@@ -8,14 +8,28 @@ const readlinkRecursively = async (filePath, depth = 1, MAX_DEPTH = 3) => {
     '..',
     await fsPromisify.readlink(filePath)
   );
-  if ((await fsPromisify.lstat(target)).isSymbolicLink()) {
+  let isLink = false;
+  let exists = true;
+  try {
+    isLink = (await fsPromisify.lstat(target)).isSymbolicLink();
+  } catch (_e) {
+    console.log(_e);
+    exists = false;
+  }
+  if (isLink) {
     if (depth >= MAX_DEPTH) {
       console.error('max depth for `readlinkRecursively()` reached');
-      return target;
+      return {
+        target,
+        exists
+      };
     }
     return readlinkRecursively(target, depth + 1, MAX_DEPTH);
   }
-  return target;
+  return {
+    target,
+    exists
+  };
 };
 
 export async function findNpmLinks(dir) {
@@ -30,7 +44,7 @@ export async function findNpmLinks(dir) {
       if (fileStats.isSymbolicLink()) {
         links.push({
           packageName: filename,
-          link: await readlinkRecursively(path.join(dir, filename))
+          ...(await readlinkRecursively(path.join(dir, filename)))
         });
       } else if (fileStats.isDirectory() && filename.startsWith('@')) {
         const dirWithScope = path.join(dir, filename);
@@ -48,9 +62,9 @@ export async function findNpmLinks(dir) {
             if (fileStatsInScope.isSymbolicLink()) {
               links.push({
                 packageName: path.join(filename, filenameInScope),
-                link: await readlinkRecursively(
+                ...(await readlinkRecursively(
                   path.join(dirWithScope, filenameInScope)
-                )
+                ))
               });
             }
           })
