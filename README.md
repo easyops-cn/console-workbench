@@ -5,6 +5,7 @@
 [![Dependency Status][david_img]][david_site]
 [![DevDependency Status][david_img_dev]][david_site_dev]
 [![Github Tag][github-tag-image]][github-tag-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
 
 Console Workbench 可以界面化管理多个命令行任务，这对当前多包集成的工作有一定用处，欢迎试用。
 
@@ -45,3 +46,5 @@ MIT
 [david_site]: https://david-dm.org/easyops-cn/console-workbench
 [david_img_dev]: https://david-dm.org/easyops-cn/console-workbench/dev-status.svg
 [david_site_dev]: https://david-dm.org/easyops-cn/console-workbench?type=dev
+[coveralls-image]: https://coveralls.io/repos/github/easyops-cn/console-workbench/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/easyops-cn/console-workbench?branch=master

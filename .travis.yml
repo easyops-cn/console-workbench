@@ -85,3 +85,4 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn test; fi
   - yarn build-e2e
   - yarn test-e2e
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn coveralls; fi
