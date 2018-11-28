@@ -184,7 +184,7 @@
     "chalk": "2.4.1",
     "concurrently": "4.1.0",
     "connected-react-router": "5.0.1",
-    "coveralls": "^3.0.2",
+    "coveralls": "3.0.2",
     "cross-env": "5.2.0",
     "cross-spawn": "6.0.5",
     "css-loader": "1.0.1",
