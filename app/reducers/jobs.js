@@ -90,9 +90,6 @@ const entities = (state = {}, action: Action) => {
       };
     case JOB_CLOSE:
     case JOB_EXIT:
-      if (!state[action.job.id].running) {
-        return state;
-      }
       return {
         ...state,
         [action.job.id]: {

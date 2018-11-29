@@ -24,6 +24,34 @@ describe('jobs actions', () => {
     removeTaskByJobId(2);
   });
 
+  it('create addJob action when job is empty', () => {
+    // eslint-disable-next-line no-underscore-dangle
+    storage.__clear();
+    const fn = actions.addJob({
+      name: 'test job for addJob action',
+      cmd: 'ls -l',
+      cwd: '/tmp',
+      subPackageDir: 'sub/pkg'
+    });
+    expect(fn).toBeInstanceOf(Function);
+
+    const dispatch = spy();
+    fn(dispatch);
+
+    expect(
+      dispatch.calledWith({
+        type: actions.ADD_JOB,
+        job: {
+          id: 1,
+          name: 'test job for addJob action',
+          cmd: 'ls -l',
+          cwd: '/tmp',
+          subPackageDir: 'sub/pkg'
+        }
+      })
+    ).toBe(true);
+  });
+
   it('create addJob action', () => {
     const fn = actions.addJob({
       name: 'test job for addJob action',
@@ -131,6 +159,23 @@ describe('jobs actions', () => {
     ).toBe(true);
   });
 
+  it('do nothing if apply startJob action to an already started job', () => {
+    const job = {
+      id: 2,
+      name: 'test job for startJob action',
+      cmd: 'ls -l',
+      cwd: '/tmp',
+      starting: true
+    };
+    const fn = actions.startJob(job);
+    expect(fn).toBeInstanceOf(Function);
+
+    const dispatch = spy();
+    fn(dispatch);
+
+    expect(dispatch.called).toBe(false);
+  });
+
   it('create startJob action', () => {
     const spawnEvent = new EventEmitter();
     spawnEvent.stdout = new EventEmitter();
@@ -218,6 +263,24 @@ describe('jobs actions', () => {
         signal: 'SIGHUP'
       })
     ).toBe(true);
+
+    sandbox.restore();
+  });
+
+  it('do nothing if apply stopJob action when task not found', () => {
+    const mockKill = sandbox.stub(process, 'kill');
+
+    const fn = actions.stopJob({
+      id: 3,
+      name: 'test job',
+      running: true
+    });
+    expect(fn).toBeInstanceOf(Function);
+
+    const dispatch = spy();
+    fn(dispatch);
+
+    expect(mockKill.called).toBe(false);
 
     sandbox.restore();
   });

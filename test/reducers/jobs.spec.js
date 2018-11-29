@@ -411,12 +411,33 @@ describe('reducers', () => {
 
     it('should handle ACTIVATE_JOB', () => {
       expect(
-        jobs(undefined, {
-          type: ACTIVATE_JOB,
-          job: {
-            id: 1
+        jobs(
+          {
+            active: null
+          },
+          {
+            type: ACTIVATE_JOB,
+            job: {
+              id: 1
+            }
           }
-        })
+        )
+      ).toMatchSnapshot();
+    });
+
+    it('should handle ACTIVATE_JOB again', () => {
+      expect(
+        jobs(
+          {
+            active: 1
+          },
+          {
+            type: ACTIVATE_JOB,
+            job: {
+              id: 1
+            }
+          }
+        )
       ).toMatchSnapshot();
     });
 
