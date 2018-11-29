@@ -164,8 +164,35 @@ Object {
       "buffer": Array [],
       "cursor": 0,
       "returned": "$ ls -l
-drwx
+
 100% done.",
+    },
+  },
+}
+`;
+
+exports[`reducers jobs should handle JOB_OUTPUT when output is undefined 1`] = `
+Object {
+  "active": null,
+  "entities": Object {
+    "1": Object {
+      "cmd": "ls -l",
+      "cwd": "/tmp",
+      "id": 1,
+      "name": "test job for JOB_OUTPUT",
+      "running": true,
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "outputs": Object {
+    "1": Object {
+      "buffer": Array [
+        "drwx",
+      ],
+      "cursor": 0,
+      "returned": undefined,
     },
   },
 }
