@@ -211,7 +211,7 @@ describe('reducers', () => {
               1: {
                 returned: '$ ls -l',
                 buffer: ['drwx'],
-                cursor: 4
+                cursor: 0
               }
             }
           },
@@ -223,7 +223,43 @@ describe('reducers', () => {
               cmd: 'ls -l',
               cwd: '/tmp'
             },
-            output: '\n10% run\b\b\b\b\b\b\b100% done.\n'
+            output: '\b\n10% run\b\b\b\b\b\b\b100% done.\n'
+          }
+        )
+      ).toMatchSnapshot();
+    });
+
+    it('should handle JOB_OUTPUT when output is undefined', () => {
+      expect(
+        jobs(
+          {
+            ids: [1],
+            entities: {
+              1: {
+                id: 1,
+                name: 'test job for JOB_OUTPUT',
+                cmd: 'ls -l',
+                cwd: '/tmp',
+                running: true
+              }
+            },
+            outputs: {
+              1: {
+                returned: undefined,
+                buffer: ['drwx'],
+                cursor: 0
+              }
+            }
+          },
+          {
+            type: JOB_OUTPUT,
+            job: {
+              id: 1,
+              name: 'test job for JOB_OUTPUT',
+              cmd: 'ls -l',
+              cwd: '/tmp'
+            },
+            output: undefined
           }
         )
       ).toMatchSnapshot();
