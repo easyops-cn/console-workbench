@@ -9,6 +9,15 @@ Object {
 }
 `;
 
+exports[`reducers jobs should handle ACTIVATE_JOB again 1`] = `
+Object {
+  "active": null,
+  "entities": Object {},
+  "ids": Array [],
+  "outputs": Object {},
+}
+`;
+
 exports[`reducers jobs should handle ADD_JOB 1`] = `
 Object {
   "active": null,

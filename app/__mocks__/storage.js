@@ -20,7 +20,10 @@ const storage = {
   set: (key, value) => {
     storeMap.set(key, value);
   },
-  __reset
+  __reset,
+  __clear: () => {
+    storeMap.clear();
+  }
 };
 
 export default storage;

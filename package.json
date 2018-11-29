@@ -148,7 +148,8 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "app/actions/*.js",
-      "app/reducers/*.js"
+      "app/reducers/*.js",
+      "app/utils/*.js"
     ]
   },
   "devDependencies": {
