@@ -3961,10 +3961,10 @@ connected-domain@^1.0.0:
   resolved "https://registry.npmjs.org/connected-domain/-/connected-domain-1.0.0.tgz#bfe77238c74be453a79f0cb6058deeb4f2358e93"
   integrity sha1-v+dyOMdL5FOnnwy2BY3utPI1jpM=
 
-connected-react-router@6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/connected-react-router/-/connected-react-router-6.1.0.tgz#a6f361313cf0a37c8c33578494bb813d09252abf"
-  integrity sha512-sdu+rf6TvjH3/I/S6+VFV9efThSyyRVwOhTZhC7XdqqZ700PdqgzfPr3sSK635JPbBFYhFYP97/KWTFdjldL0A==
+connected-react-router@6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/connected-react-router/-/connected-react-router-6.2.0.tgz#f984a5be5abf50d78a9f0c5841431077b9ca627e"
+  integrity sha512-hgDt+NhtjKHg7m0zpD2eMs0mcgC2kqQITdTQvEWOK26vT6RXDOA8KyzzZ4H04/1zGKUrvwjqrsHHvZ4dQTo/dQ==
   dependencies:
     immutable "^3.8.1"
     seamless-immutable "^7.1.3"
