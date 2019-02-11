@@ -249,7 +249,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.2.0",
-    "ansi_up": "^3.0.0",
+    "ansi_up": "^4.0.0",
     "classnames": "^2.2.6",
     "default-shell": "^1.0.1",
     "electron-debug": "^2.0.0",
