@@ -3998,10 +3998,10 @@ connected-domain@^1.0.0:
   resolved "https://registry.npmjs.org/connected-domain/-/connected-domain-1.0.0.tgz#bfe77238c74be453a79f0cb6058deeb4f2358e93"
   integrity sha1-v+dyOMdL5FOnnwy2BY3utPI1jpM=
 
-connected-react-router@6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/connected-react-router/-/connected-react-router-6.3.0.tgz#71ef010ca68735fd99374048effdc730da4c918f"
-  integrity sha512-2U3LSZAxS7V6Hfd0OcpsVGLf93qIzgAn9LQ4taLEFeqHTXcJsykezV0XC+wUJu2KkenvIbfs4fo1/w++j6ogMA==
+connected-react-router@6.3.1:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/connected-react-router/-/connected-react-router-6.3.1.tgz#b68e505cca553ce9b6a179d4166cf43b948c85bf"
+  integrity sha512-nhuQiLOAQlCgkCypGSUhycgaqqTh2IUwVFvzw2y13v8JqB92yTk3yeAKG6X1b0IcD7S4gQizYbjgejf7DJjbyw==
   dependencies:
     immutable "^3.8.1"
     seamless-immutable "^7.1.3"
