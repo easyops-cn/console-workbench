@@ -1887,10 +1887,10 @@ ansi-wrap@0.1.0, ansi-wrap@^0.1.0:
   resolved "https://registry.npmjs.org/ansi-wrap/-/ansi-wrap-0.1.0.tgz#a82250ddb0015e9a27ca82e82ea603bbfa45efaf"
   integrity sha1-qCJQ3bABXponyoLoLqYDu/pF768=
 
-ansi_up@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/ansi_up/-/ansi_up-3.0.0.tgz#27f45d8f457d9ceff59e4ea03c8e6f13c1a303e8"
-  integrity sha1-J/Rdj0V9nO/1nk6gPI5vE8GjA+g=
+ansi_up@^4.0.0:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/ansi_up/-/ansi_up-4.0.2.tgz#8be766dd69ab8c9f2df98bbd52069a0abc0ab813"
+  integrity sha512-CXeN5icnf2XB6dnj4BNTYwoUStQN9EoJPxj5YUMz3T7L8eOqSA6TSwutubTJQegtuivDQlnh3rLi0YoOCHbgoA==
 
 any-observable@^0.3.0:
   version "0.3.0"
