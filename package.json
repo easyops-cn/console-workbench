@@ -254,7 +254,7 @@
     "default-shell": "^1.0.1",
     "electron-debug": "^2.0.0",
     "electron-log": "^3.0.0",
-    "electron-store": "^2.0.0",
+    "electron-store": "^3.0.0",
     "electron-updater": "^4.0.0",
     "history": "^4.7.2",
     "react": "^16.4.1",
