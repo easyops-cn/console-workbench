@@ -211,7 +211,7 @@
     "eslint-plugin-react": "7.14.2",
     "eslint-plugin-testcafe": "0.2.1",
     "fbjs-scripts": "1.1.0",
-    "file-loader": "4.0.0",
+    "file-loader": "4.1.0",
     "flow-bin": "0.102.0",
     "flow-runtime": "0.17.0",
     "flow-typed": "2.5.2",
