@@ -252,7 +252,7 @@
     "ansi_up": "^4.0.0",
     "classnames": "^2.2.6",
     "default-shell": "^1.0.1",
-    "electron-debug": "^2.0.0",
+    "electron-debug": "^3.0.0",
     "electron-log": "^3.0.0",
     "electron-store": "^3.0.0",
     "electron-updater": "^4.0.0",
